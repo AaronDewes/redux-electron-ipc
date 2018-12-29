@@ -1,5 +1,3 @@
-import { ipcRenderer as ipc } from 'electron';
-
 export default function createIpc (events = {}) {
   if (typeof events !== 'object') {
     throw new TypeError(`createIpc expects an events object as its first parameter, you passed type "${typeof events}"`);
@@ -13,7 +11,7 @@ export default function createIpc (events = {}) {
 
   return ({ dispatch }) => {
     Object.keys(events).forEach((key) => {
-      ipc.on(key, function () {
+      window.ipcRenderer.on(key, function () {
         dispatch(events[key](...arguments));
       });
     });
@@ -21,7 +19,7 @@ export default function createIpc (events = {}) {
     return function (next) {
       return function (action) {
         if (action.type.startsWith('@@IPC')) {
-          ipc.send(action.channel, ...(action.args || []));
+          window.ipcRenderer.send(action.channel, ...(action.args || []));
         }
 
         return next(action);
