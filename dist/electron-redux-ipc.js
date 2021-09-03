@@ -1,117 +1,65 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define("electron-redux-ipc", [], factory);
-	else if(typeof exports === 'object')
-		exports["electron-redux-ipc"] = factory();
-	else
-		root["electron-redux-ipc"] = factory();
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ var __webpack_modules__ = ({
 
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
-/******/ 			return installedModules[moduleId].exports;
-
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
-/******/ 		};
-
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
-
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-
-
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	exports.default = createIpc;
-	exports.send = send;
-
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-	function createIpc() {
-	  var events = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-	  if ((typeof events === 'undefined' ? 'undefined' : _typeof(events)) !== 'object') {
-	    throw new TypeError('createIpc expects an events object as its first parameter, you passed type "' + (typeof events === 'undefined' ? 'undefined' : _typeof(events)) + '"');
-	  }
-
-	  Object.keys(events).forEach(function (key) {
-	    if (typeof events[key] !== 'function') {
-	      throw new TypeError('Each key in createIpc\'s events object must be a dispatch-able function, key "' + key + '" is of type "' + _typeof(events[key]) + '"');
-	    }
-	  });
-
-	  return function (_ref) {
-	    var dispatch = _ref.dispatch;
-
-	    Object.keys(events).forEach(function (key) {
-	      window.ipcRenderer.on(key, function () {
-	        dispatch(events[key].apply(events, arguments));
-	      });
-	    });
-
-	    return function (next) {
-	      return function (action) {
-	        if (action.type.startsWith('@@IPC')) {
-	          var _window$ipcRenderer;
-
-	          (_window$ipcRenderer = window.ipcRenderer).send.apply(_window$ipcRenderer, [action.channel].concat(_toConsumableArray(action.args || [])));
-	        }
-
-	        return next(action);
-	      };
-	    };
-	  };
-	}
-
-	function send(channel) {
-	  return {
-	    type: '@@IPC',
-	    channel: channel,
-	    args: Array.prototype.slice.call(arguments, 1)
-	  };
-	}
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ createIpc),\n/* harmony export */   \"send\": () => (/* binding */ send)\n/* harmony export */ });\nfunction createIpc (events = {}) {\n  if (typeof events !== 'object') {\n    throw new TypeError(`createIpc expects an events object as its first parameter, you passed type \"${typeof events}\"`);\n  }\n\n  Object.keys(events).forEach(key => {\n    if (typeof events[key] !== 'function') {\n      throw new TypeError(`Each key in createIpc's events object must be a dispatch-able function, key \"${key}\" is of type \"${typeof events[key]}\"`);\n    }\n  });\n\n  return ({ dispatch }) => {\n    Object.keys(events).forEach((key) => {\n      window.ipcRenderer.on(key, function () {\n        dispatch(events[key](...arguments));\n      });\n    });\n\n    return function (next) {\n      return function (action) {\n        if (action.type.startsWith('@@IPC')) {\n          window.ipcRenderer.send(action.channel, ...(action.args || []));\n        }\n\n        return next(action);\n      };\n    };\n  };\n}\n\nfunction send (channel) {\n  return {\n    type: '@@IPC',\n    channel,\n    args: Array.prototype.slice.call(arguments, 1)\n  };\n}\n\n\n//# sourceURL=webpack://redux-electron-ipc/./src/index.js?");
 
 /***/ })
-/******/ ])
-});
-;
+
+/******/ });
+/************************************************************************/
+/******/ // The require scope
+/******/ var __webpack_require__ = {};
+/******/ 
+/************************************************************************/
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 			}
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/make namespace object */
+/******/ (() => {
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = (exports) => {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/ })();
+/******/ 
+/************************************************************************/
+/******/ 
+/******/ // startup
+/******/ // Load entry module and return exports
+/******/ // This entry module can't be inlined because the eval devtool is used.
+/******/ var __webpack_exports__ = {};
+/******/ __webpack_modules__["./src/index.js"](0, __webpack_exports__, __webpack_require__);
+/******/ var __webpack_exports__default = __webpack_exports__["default"];
+/******/ var __webpack_exports__send = __webpack_exports__.send;
+/******/ export { __webpack_exports__default as default, __webpack_exports__send as send };
+/******/ 

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { applyMiddleware, createStore } from 'redux';
-import proxyquire from 'proxyquire';
+import esmock from 'esmock';
 import { EventEmitter } from 'events';
 import thunk from 'redux-thunk';
 
@@ -15,16 +15,16 @@ class ipcMock extends EventEmitter {
   }
 }
 
-describe('redux electron ipc', () => {
+describe('redux electron ipc', async () => {
   let createIpc;
   let send;
   let ipcRenderer;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     ipcRenderer = new ipcMock();
 
     // mock electron ipc event emitter when loading our library
-    const lib = proxyquire.noCallThru().load('../src', {
+    const lib = await esmock('../src', {}, {
       electron: { ipcRenderer }
     });
 
